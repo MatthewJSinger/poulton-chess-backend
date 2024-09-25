@@ -17,15 +17,15 @@ var db *sql.DB
 func main() {
 	var err error
 
-	password := os.Getenv("SECRET")
-	db_host := os.Getenv("DB_IP") + ":3306"
+	var PASSWORD string = os.Getenv("SECRET")
+	var DB_HOST string = os.Getenv("DB_IP") + ":3306"
 
 	// connect to the database
 	cfg := mysql.Config{
 		User:   "root",
-		Passwd: password,
+		Passwd: PASSWORD,
 		Net:    "tcp",
-		Addr:   db_host,
+		Addr:   DB_HOST,
 		DBName: "chess_club",
 	}
 
