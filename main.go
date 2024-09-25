@@ -15,6 +15,8 @@ import (
 var db *sql.DB
 
 func main() {
+	var err error
+
 	password := os.Getenv("SECRET")
 	db_host := os.Getenv("DB_IP") + ":3306"
 
