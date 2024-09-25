@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"strings"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -16,21 +15,15 @@ import (
 var db *sql.DB
 
 func main() {
-	// read the password from the "secret" file
-	var err error
-	passwordBytes, err := os.ReadFile("secret")
-	if err != nil {
-		panic(err)
-	}
-	password := string(passwordBytes)
-	password = strings.TrimSpace(password)
+	password := os.Getenv("SECRET")
+	db_host := os.Getenv("DB_IP") + ":3306"
 
 	// connect to the database
 	cfg := mysql.Config{
 		User:   "root",
 		Passwd: password,
 		Net:    "tcp",
-		Addr:   "192.168.1.163:3306",
+		Addr:   db_host,
 		DBName: "chess_club",
 	}
 
