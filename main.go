@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
+	"strings"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -14,17 +16,25 @@ import (
 var db *sql.DB
 
 func main() {
+	// read the password from the "secret" file
+	var err error
+	passwordBytes, err := os.ReadFile("secret")
+	if err != nil {
+		panic(err)
+	}
+	password := string(passwordBytes)
+	password = strings.TrimSpace(password)
 
 	// connect to the database
 	cfg := mysql.Config{
 		User:   "root",
-		Passwd: "mtZ5PwnHSBqU",
+		Passwd: password,
 		Net:    "tcp",
 		Addr:   "192.168.1.163:3306",
 		DBName: "chess_club",
 	}
 
-	var err error
+
 	db, err = sql.Open("mysql", cfg.FormatDSN())
 	if err != nil {
 		panic(err)
